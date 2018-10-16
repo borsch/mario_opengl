@@ -3,6 +3,7 @@
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 bool is_shader_valid(const GLuint& shader_id);
 GLuint create_vao_triangle(const GLfloat* vertices, GLuint array_lenght);
+GLuint create_shader_program(const GLchar* vertex_shader_source, const GLchar* fragment_shader_source);
 
 int main()
 {
@@ -48,28 +49,22 @@ int main()
 										gl_Position = vec4(position.x, position.y, position.z, 1.0); \
 									}";
 
-	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex_shader_id, 1, &vertex_shader_source, NULL);
-	glCompileShader(vertex_shader_id);
-
-	const GLchar* fragment_stader_source = "#version 330 core \n\
+	const GLchar* fragment_shader_orange_source = "#version 330 core \n\
 									out vec4 color; \
 									void main() \
 									{ \
 										color = vec4(1.0f, 0.5f, 0.2f, 1.0f); \
 									}";
 
-	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment_shader_id, 1, &fragment_stader_source, NULL);
-	glCompileShader(fragment_shader_id);
+	const GLchar* fragment_shader_yellow_source = "#version 330 core \n\
+									out vec4 color; \
+									void main() \
+									{ \
+										color = vec4(1.0f, 1.0f, 0.0f, 1.0f); \
+									}";
 
-	GLuint shader_program_id = glCreateProgram();
-	glAttachShader(shader_program_id, vertex_shader_id);
-	glAttachShader(shader_program_id, fragment_shader_id);
-	glLinkProgram(shader_program_id);
-
-	glDeleteShader(vertex_shader_id);
-	glDeleteShader(fragment_shader_id);
+	GLuint shader_program_orange = create_shader_program(vertex_shader_source, fragment_shader_orange_source);
+	GLuint shader_program_yellow = create_shader_program(vertex_shader_source, fragment_shader_yellow_source);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -78,10 +73,11 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(shader_program_id);
-		glBindVertexArray(vao2_id);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glUseProgram(shader_program_orange);
 		glBindVertexArray(vao1_id);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glUseProgram(shader_program_yellow);
+		glBindVertexArray(vao2_id);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindVertexArray(0);
 
@@ -141,4 +137,25 @@ GLuint create_vao_triangle(const GLfloat* vertices, GLuint array_lenght)
 	glBindVertexArray(0);
 
 	return vao_id;
+}
+
+GLuint create_shader_program(const GLchar* vertex_shader_source, const GLchar* fragment_shader_source)
+{
+	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertex_shader_id, 1, &vertex_shader_source, NULL);
+	glCompileShader(vertex_shader_id);
+
+	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragment_shader_id, 1, &fragment_shader_source, NULL);
+	glCompileShader(fragment_shader_id);
+
+	GLuint shader_program_id = glCreateProgram();
+	glAttachShader(shader_program_id, vertex_shader_id);
+	glAttachShader(shader_program_id, fragment_shader_id);
+	glLinkProgram(shader_program_id);
+
+	glDeleteShader(vertex_shader_id);
+	glDeleteShader(fragment_shader_id);
+
+	return shader_program_id;
 }

@@ -55,16 +55,26 @@ int main()
 	// end configure whole vao
 	glBindVertexArray(0);
 
-	
+	const GLchar* vertex_shader_source = "#version 330 core \n\
+									layout(location = 0) in vec3 position; \
+									void main() \
+									{ \
+										gl_Position = vec4(position.x, position.y, position.z, 1.0); \
+									}";
 
 	GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
-	const GLchar* default_vertex_shader = C_DEFAULT_VERTEX_SHADER;
-	glShaderSource(vertex_shader_id, 1, &default_vertex_shader, NULL);
+	glShaderSource(vertex_shader_id, 1, &vertex_shader_source, NULL);
 	glCompileShader(vertex_shader_id);
 
+	const GLchar* fragment_stader_source = "#version 330 core \n\
+									out vec4 color; \
+									void main() \
+									{ \
+										color = vec4(1.0f, 0.5f, 0.2f, 1.0f); \
+									}";
+
 	GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
-	const GLchar* default_fragment_shader = C_DEFAULT_FRAGMENT_SHADER;
-	glShaderSource(fragment_shader_id, 1, &default_fragment_shader, NULL);
+	glShaderSource(fragment_shader_id, 1, &fragment_stader_source, NULL);
 	glCompileShader(fragment_shader_id);
 
 	GLuint shader_program_id = glCreateProgram();

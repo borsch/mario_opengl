@@ -49,8 +49,8 @@ int main()
 	// end configure whole vao
 	glBindVertexArray(0);
 
-	std::string vertex_shader = "D:\\workspace\\mario_opengl\\shaders\\vertex_shader.glsl";
-	std::string fragment_shader = "D:\\workspace\\mario_opengl\\shaders\\fragment_shader.glsl";
+	std::string vertex_shader = "D:\\workspace\\mario_opengl\\shaders\\vertex_shader.vs";
+	std::string fragment_shader = "D:\\workspace\\mario_opengl\\shaders\\fragment_shader.fs";
 
 	const Shader shader(vertex_shader, fragment_shader);
 

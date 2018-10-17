@@ -53,6 +53,7 @@ int main()
 	std::string fragment_shader = "D:\\workspace\\mario_opengl\\shaders\\fragment_shader.fs";
 
 	const Shader shader(vertex_shader, fragment_shader);
+	const GLchar* uniform_name = "offset_left";
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -62,6 +63,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shader.use();
+		glUniform3f(shader.get_uniform_location(uniform_name), 0.5, 0, 0);
 		glBindVertexArray(vao_id);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindVertexArray(0);

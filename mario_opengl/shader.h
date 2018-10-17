@@ -18,6 +18,7 @@ public:
 	Shader(std::string& vertex_path, std::string& fragment_path);
 
 	void use() const;
+	GLuint get_uniform_location(const GLchar* uniform_name) const;
 };
 
 #endif

@@ -5,6 +5,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <SOIL.h>
+
 #include <iostream>
 
 #define C_OPEN_GL_VERSION(major, minor) glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major); \

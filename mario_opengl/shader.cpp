@@ -81,3 +81,8 @@ GLuint Shader::get_uniform_location(const GLchar* uniform_name) const
 {
 	return glGetUniformLocation(this->_program, uniform_name);
 }
+
+GLuint Shader::program_id() const
+{
+	return this->_program;
+}

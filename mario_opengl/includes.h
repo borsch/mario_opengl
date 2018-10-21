@@ -7,6 +7,10 @@
 
 #include <SOIL.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <iostream>
 
 #define C_OPEN_GL_VERSION(major, minor) glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major); \
@@ -20,5 +24,7 @@
 													glfwTerminate(); \
 													return -1; \
 												} \
+
+#define C_DEGREES(angle) glm::radians(angle)
 
 #endif

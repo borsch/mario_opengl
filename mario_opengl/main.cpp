@@ -79,6 +79,18 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shader.use();
+
+		GLfloat time = (GLfloat)glfwGetTime();
+		float scale = glm::abs(glm::sin(time));
+		scale = glm::max(0.2f, scale);
+
+		glm::mat4 trans(1.0);
+		trans = glm::scale(trans, glm::vec3(scale, scale, 1.0f));
+		trans = glm::rotate(trans, C_DEGREES(time * 50.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		//trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+
+		glUniformMatrix4fv(shader.get_uniform_location("transform"), 1, GL_FALSE, glm::value_ptr(trans));
+
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture_id1);
 		glUniform1i(shader.get_uniform_location("ourTexture1"), 0);
